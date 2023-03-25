@@ -1,0 +1,20 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven {
+            name 'papermc-repo'
+            url 'https://papermc.io/repo/repository/maven-public/'
+        }
+    }
+    repositoriesMode.set RepositoriesMode.FAIL_ON_PROJECT_REPOS
+}
+
+rootProject.name = 'springlify'
+

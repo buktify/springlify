@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "springlify.config",
+      "type": "java.lang.String",
+      "description": "Name of bukkit configuration."
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+name: springlify
+main: ru.starmc.springlify.DummySpringlifyPlugin
+version: 1.0
+api-version: 1.13
