@@ -1,5 +1,8 @@
 package ru.starmc.springlify.spring.initializer;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,13 +21,11 @@ import java.io.InputStreamReader;
 /**
  * Initializer that set core properties and adds config yml source
  */
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 public class SpringlifyInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    private final Plugin plugin;
-
-    public SpringlifyInitializer(Plugin plugin) {
-        this.plugin = plugin;
-    }
+    Plugin plugin;
 
     @SuppressWarnings("ConstantConditions")
     public void initialize(ConfigurableApplicationContext context) {

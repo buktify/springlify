@@ -10,7 +10,7 @@ public class ConfigurationPropertySource extends PropertySource<Configuration> {
     }
 
     @Override
-    public Object getProperty(String s) {
-        return source.get(s);
+    public Object getProperty(String property) {
+        return source.get(property);
     }
 }

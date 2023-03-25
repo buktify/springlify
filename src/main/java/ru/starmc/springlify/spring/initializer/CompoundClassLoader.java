@@ -1,5 +1,7 @@
 package ru.starmc.springlify.spring.initializer;
 
+import lombok.SneakyThrows;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -39,8 +41,8 @@ public class CompoundClassLoader extends ClassLoader {
     }
 
     private Optional<Class<?>> spigotWorkaroundClass(String name) {
-        if (!name.endsWith(".class"))
-            return Optional.empty(); // Если это не класс, то это может быть какой то ресурс чужого плагина, оно нам не надо
+        if (!name.endsWith(".class")) return Optional.empty();
+        // Если это не класс, то это может быть какой то ресурс чужого плагина, оно нам не надо
 
         name = name.replace("/", ".");
         name = name.substring(0, name.length() - ".class".length());
@@ -54,7 +56,6 @@ public class CompoundClassLoader extends ClassLoader {
 
             }
         }
-
         return Optional.ofNullable(foundClass);
     }
 
@@ -71,12 +72,10 @@ public class CompoundClassLoader extends ClassLoader {
                 }
             }
         }
-
         return spigotWorkaround(name)
                 .map(loader -> loader.getResource(name))
                 .orElse(null);
     }
-
 
     /**
      * {@inheritDoc}
@@ -99,26 +98,22 @@ public class CompoundClassLoader extends ClassLoader {
 
     // В этом методе юзаются только ресурсы самого плагина, не буду сюда все плаги пихать, а то каша будет
     @Override
-    public Enumeration<URL> getResources(String name) throws IOException {
+    @SneakyThrows(IOException.class)
+    public Enumeration<URL> getResources(String name) {
         List<URL> urls = new ArrayList<>();
         for (ClassLoader loader : defaultLoaders) {
             if (loader != null) {
-                try {
-                    Enumeration<URL> resources = loader.getResources(name);
-                    while (resources.hasMoreElements()) {
-                        URL resource = resources.nextElement();
-                        if (resource != null && !urls.contains(resource)) {
-                            urls.add(resource);
-                        }
+                Enumeration<URL> resources = loader.getResources(name);
+                while (resources.hasMoreElements()) {
+                    URL resource = resources.nextElement();
+                    if (resource != null && !urls.contains(resource)) {
+                        urls.add(resource);
                     }
-                } catch (IOException ignored) {
                 }
             }
         }
-
         return Collections.enumeration(urls);
     }
-
 
     @Override
     public Class<?> loadClass(String name) throws ClassNotFoundException {
@@ -138,12 +133,13 @@ public class CompoundClassLoader extends ClassLoader {
      */
     @Override
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-        // loader.loadClass(name, resolve) is not visible!
         return loadClass(name);
     }
 
     @Override
     public String toString() {
-        return String.format("CompoundClassloader %s", defaultLoaders);
+        return "CompoundClassLoader{" +
+                "defaultLoaders=" + defaultLoaders +
+                '}';
     }
 }

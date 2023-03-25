@@ -1,5 +1,6 @@
 package ru.starmc.springlify.spring.initializer;
 
+import lombok.NoArgsConstructor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -12,23 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EnableAutoConfiguration()
-public final class SpringlifyBootstrapper {
-
-    private SpringlifyBootstrapper() {
-    }
+@NoArgsConstructor
+public final class SpringlifyBootstrap {
 
     public static ConfigurableApplicationContext initialize(JavaPlugin plugin, Class<?> appClass) {
         if (plugin.getClass().equals(appClass))
-            throw new RuntimeException("Plugin cant be app class");
-
+            throw new RuntimeException("Plugin can't be an application class");
         List<ClassLoader> loaders = new ArrayList<>(4);
-
         loaders.add(plugin.getClass().getClassLoader());
         loaders.add(DummySpringlifyPlugin.class.getClassLoader());
         loaders.add(Thread.currentThread().getContextClassLoader());
-
         CompoundClassLoader classLoader = new CompoundClassLoader(loaders);
-
         return initialize(plugin, classLoader, appClass);
     }
 

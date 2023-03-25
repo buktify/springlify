@@ -1,16 +1,19 @@
 package ru.starmc.springlify.spring.initializer;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.springframework.context.ConfigurableApplicationContext;
 
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class SpringlifyPlugin extends JavaPlugin {
-    private ConfigurableApplicationContext context;
+    ConfigurableApplicationContext context;
 
     @Override
     public void onEnable() {
-        this.context = SpringlifyBootstrapper.initialize(this, getAppClass());
+        this.context = SpringlifyBootstrap.initialize(this, getApplicationClass());
     }
 
     @Override
@@ -22,15 +25,8 @@ public abstract class SpringlifyPlugin extends JavaPlugin {
     }
 
     public <T> T getService(Class<T> serviceClass) {
-        if (allowExternalAccess(serviceClass))
-            return context.getBean(serviceClass);
-        else
-            return null;
+        return context.getBean(serviceClass);
     }
 
-    protected boolean allowExternalAccess(Class<?> needClass) {
-        return true;
-    }
-
-    protected abstract Class<?> getAppClass();
+    protected abstract Class<?> getApplicationClass();
 }
