@@ -1,9 +1,9 @@
 package org.buktify.springlify.initializer;
 
-import dev.temez.springlify.commands.SpigotCommandInitializer;
-import dev.temez.springlify.listener.ListenableServiceInitializer;
 import lombok.experimental.UtilityClass;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.buktify.springlify.commands.SpigotCommandInitializer;
+import org.buktify.springlify.listener.ListenableServiceInitializer;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.Banner;
 import org.springframework.boot.builder.SpringApplicationBuilder;

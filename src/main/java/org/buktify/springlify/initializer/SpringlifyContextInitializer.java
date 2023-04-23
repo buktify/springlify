@@ -1,6 +1,6 @@
 package org.buktify.springlify.initializer;
 
-import dev.temez.springlify.configuration.DatabaseConfiguration;
+import org.buktify.springlify.configuration.DatabaseConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;

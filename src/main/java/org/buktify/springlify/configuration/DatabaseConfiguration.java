@@ -1,10 +1,10 @@
 package org.buktify.springlify.configuration;
 
-import dev.temez.jedicraft.configurate.ConfigurationService;
-import dev.temez.springlify.configuration.settings.DatabaseSettings;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.buktify.configurate.ConfigurationService;
+import org.buktify.springlify.configuration.settings.DatabaseSettings;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class DatabaseConfiguration {
 
     @Bean
-    public DatabaseSettings databaseSettings(@NotNull JavaPlugin javaPlugin){
+    public DatabaseSettings databaseSettings(@NotNull JavaPlugin javaPlugin) {
         DatabaseSettings databaseSettings = new DatabaseSettings();
         new ConfigurationService()
                 .rootDirectory(javaPlugin.getDataFolder())
@@ -26,7 +26,6 @@ public class DatabaseConfiguration {
                 .apply();
         return databaseSettings;
     }
-
 
     @Bean
     public HashMap<Object, Object> hibernateProperties(@NotNull DatabaseSettings databaseSettings) {
@@ -37,7 +36,7 @@ public class DatabaseConfiguration {
                 put("hibernate.connection.username", databaseSettings.getUsername());
                 put("hibernate.connection.password", databaseSettings.getPassword());
 
-                for (String option : databaseSettings.getAdditionalProperties()){
+                for (String option : databaseSettings.getAdditionalProperties()) {
                     String[] optionsArray = option.split(":");
                     put(optionsArray[0], optionsArray[1]);
                 }

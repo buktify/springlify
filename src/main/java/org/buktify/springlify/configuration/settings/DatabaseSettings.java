@@ -1,11 +1,11 @@
 package org.buktify.springlify.configuration.settings;
 
-import dev.temez.configurate.annotation.Configuration;
-import dev.temez.configurate.annotation.Variable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.buktify.configurate.annotation.Configuration;
+import org.buktify.configurate.annotation.Variable;
 
 import java.util.List;
 

@@ -23,20 +23,20 @@ public class ListenableServiceInitializer implements DestructionAwareBeanPostPro
 
     @Nullable
     private Listener getListener(@NotNull Object bean) {
-        if(bean instanceof Listener listener) return listener;
+        if (bean instanceof Listener listener) return listener;
         return null;
     }
 
     @Override
     public Object postProcessAfterInitialization(@NotNull Object bean, @NotNull String beanName) throws BeansException {
         Listener listener = getListener(bean);
-        if(listener != null) plugin.getServer().getPluginManager().registerEvents(listener, plugin);
+        if (listener != null) plugin.getServer().getPluginManager().registerEvents(listener, plugin);
         return bean;
     }
 
     @Override
     public void postProcessBeforeDestruction(@NotNull Object bean, @NotNull String beanName) throws BeansException {
         Listener listener = getListener(bean);
-        if(listener != null) HandlerList.unregisterAll(listener);
+        if (listener != null) HandlerList.unregisterAll(listener);
     }
 }

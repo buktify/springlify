@@ -1,13 +1,14 @@
 package org.buktify.springlify;
 
-import dev.temez.springlify.initializer.SpringlifyInitializer;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.buktify.springlify.initializer.SpringlifyInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
-@FieldDefaults(makeFinal = true,level = AccessLevel.PRIVATE)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@SuppressWarnings("unused")
 public abstract class SpringlifyPlugin extends JavaPlugin {
 
     @NonFinal
@@ -20,7 +21,7 @@ public abstract class SpringlifyPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if(context == null) return;
+        if (context == null) return;
         context.close();
         context = null;
     }
