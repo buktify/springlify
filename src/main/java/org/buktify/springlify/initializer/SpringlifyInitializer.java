@@ -29,7 +29,6 @@ public class SpringlifyInitializer {
                     applicationContext.registerBean(ListenableServiceInitializer.class, () -> new ListenableServiceInitializer(plugin));
                 })
                 .resourceLoader(new DefaultResourceLoader(classLoader))
-                .initializers(new SpringlifyContextInitializer())
                 .bannerMode(Banner.Mode.OFF)
                 .run();
     }
