@@ -12,6 +12,14 @@ dependencyResolutionManagement {
             name 'papermc-repo'
             url 'https://papermc.io/repo/repository/maven-public/'
         }
+        maven {
+            name = 'crazy-repo'
+            url = 'https://repo.crazylegend.space/private'
+            credentials {
+                username = System.getenv("CRAZY_REPO_USER")
+                password = System.getenv("CRAZY_REPO_PASSWORD")
+            }
+        }
     }
     repositoriesMode.set RepositoriesMode.FAIL_ON_PROJECT_REPOS
 }

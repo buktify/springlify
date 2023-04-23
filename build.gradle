@@ -3,17 +3,50 @@ plugins {
     id 'org.springframework.boot' version '3.0.4'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'maven-publish'
 }
 
-group 'ru.starmc'
-version '1.0-SNAPSHOT'
+group 'org.buktify'
+version '1.0'
 
 dependencies {
     compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
+    implementation "dev.temez:configurate:1.0"
 
-    implementation 'org.springframework.boot:spring-boot-starter'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = 'crazy-repo'
+            url = 'https://repo.crazylegend.space/private'
+            credentials {
+                username = System.getenv("CRAZY_REPO_USER")
+                password = System.getenv("CRAZY_REPO_PASSWORD")
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'springlify-data-jpa'
+            group = 'org.buktify'
+            version = '1.0'
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+        }
+    }
 }
