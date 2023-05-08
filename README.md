@@ -93,7 +93,7 @@ public class TestCommand implements CommandExecutor {
 @SneakyThrows
 public DatabaseSettings databaseSettings(@NotNull ConfigurationService configurationService){
         return configurationService.getConfigurationPool().get(DatabaseSettings.class);
-        }
+}
 
 @Bean
 public ConfigurationService configurationService(@NotNull JavaPlugin javaPlugin){
@@ -102,5 +102,5 @@ public ConfigurationService configurationService(@NotNull JavaPlugin javaPlugin)
         .registerConfigurations(DatabaseSettings.class);
         configurationService.apply();
         return configurationService;
-        }
+}
 ```
