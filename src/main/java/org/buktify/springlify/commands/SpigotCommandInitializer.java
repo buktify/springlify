@@ -24,7 +24,7 @@ public class SpigotCommandInitializer implements BeanPostProcessor {
     @Nullable
     private CommandExecutor getCommandExecutor(@NotNull Object bean) throws ServiceException {
         if (bean.getClass().isAnnotationPresent(SpigotCommand.class)) {
-            if (bean instanceof CommandExecutor commandExecutor) {
+            if (bean instanceof CommandExecutor commandExecutor && !(bean instanceof JavaPlugin)) {
                 return commandExecutor;
             }
             throw new ServiceException("Command executor " + bean.getClass().getSimpleName() + " must implement CommandExecutor ");
@@ -44,7 +44,7 @@ public class SpigotCommandInitializer implements BeanPostProcessor {
         SpigotCommand commandAnnotation = commandExecutor.getClass().getAnnotation(SpigotCommand.class);
         PluginCommand command = plugin.getCommand(commandAnnotation.command());
         if (command != null) command.setExecutor((CommandExecutor) bean);
-        else log.warn("You forgot add command '" + commandAnnotation.command() + "' to plugin.yml");
+        else log.warn("You forgot add command '/" + commandAnnotation.command() + "' to plugin.yml");
         return bean;
     }
 }

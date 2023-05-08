@@ -34,14 +34,11 @@ public class CompoundClassLoader extends ClassLoader {
     }
 
     private Optional<ClassLoader> spigotWorkaround(String name) {
-        return spigotWorkaroundClass(name)
-                .map(Class::getClassLoader);
+        return spigotWorkaroundClass(name).map(Class::getClassLoader);
     }
 
     private Optional<Class<?>> spigotWorkaroundClass(String name) {
-        if (!name.endsWith(".class"))
-            return Optional.empty();
-        // Если это не класс, то это может быть какой-то ресурс чужого плагина, оно нам не надо
+        if (!name.endsWith(".class")) return Optional.empty();
 
         name = name.replace("/", ".");
         name = name.substring(0, name.length() - ".class".length());
@@ -73,9 +70,7 @@ public class CompoundClassLoader extends ClassLoader {
             }
         }
 
-        return spigotWorkaround(name)
-                .map(loader -> loader.getResource(name))
-                .orElse(null);
+        return spigotWorkaround(name).map(loader -> loader.getResource(name)).orElse(null);
     }
 
 
@@ -93,9 +88,7 @@ public class CompoundClassLoader extends ClassLoader {
             }
         }
 
-        return spigotWorkaround(name)
-                .map(loader -> loader.getResourceAsStream(name))
-                .orElse(null);
+        return spigotWorkaround(name).map(loader -> loader.getResourceAsStream(name)).orElse(null);
     }
 
     // В этом методе юзаются только ресурсы самого плагина, не буду сюда все плаги пихать, а то каша будет
