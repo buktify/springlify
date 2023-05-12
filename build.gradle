@@ -21,7 +21,7 @@ publishing {
     repositories {
         maven {
             name = 'crazy-repo'
-            url = 'https://repo.crazylegend.space/private'
+            url = 'https://repo.crazylegend.space/public'
             credentials {
                 username = System.getenv("CRAZY_REPO_USER")
                 password = System.getenv("CRAZY_REPO_PASSWORD")
