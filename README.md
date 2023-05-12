@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.buktify:springlify:1.0.3'
+    compileOnly 'org.buktify:springlify:1.0.4'
     compileOnly 'org.springframework.boot:spring-boot-starter'
 }
 ```

@@ -9,6 +9,7 @@ import org.springframework.boot.Banner;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.io.DefaultResourceLoader;
 
@@ -25,9 +26,12 @@ public class SpringlifyInitializer {
         CompoundClassLoader classLoader = new CompoundClassLoader(loaders);
         return new SpringApplicationBuilder(applicationClass)
                 .initializers((ApplicationContextInitializer<GenericApplicationContext>) applicationContext -> {
-                    applicationContext.registerBean(SpigotCommandInitializer.class, () -> new SpigotCommandInitializer(plugin));
-                    applicationContext.registerBean(ListenableServiceInitializer.class, () -> new ListenableServiceInitializer(plugin));
+                    if (applicationContext instanceof AnnotationConfigApplicationContext annotationConfigApplicationContext) {
+                        annotationConfigApplicationContext.register(ListenableServiceInitializer.class);
+                        annotationConfigApplicationContext.register(SpigotCommandInitializer.class);
+                    }
                 })
+                .initializers()
                 .resourceLoader(new DefaultResourceLoader(classLoader))
                 .bannerMode(Banner.Mode.OFF)
                 .run();

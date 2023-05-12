@@ -13,8 +13,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.annotation.Configuration;
 
 @Slf4j
+@Configuration
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class SpigotCommandInitializer implements BeanPostProcessor {
@@ -24,7 +26,7 @@ public class SpigotCommandInitializer implements BeanPostProcessor {
     @Nullable
     private CommandExecutor getCommandExecutor(@NotNull Object bean) throws ServiceException {
         if (bean.getClass().isAnnotationPresent(SpigotCommand.class)) {
-            if (bean instanceof CommandExecutor commandExecutor && !(bean instanceof JavaPlugin)) {
+            if (bean instanceof CommandExecutor commandExecutor) {
                 return commandExecutor;
             }
             throw new ServiceException("Command executor " + bean.getClass().getSimpleName() + " must implement CommandExecutor ");
@@ -43,8 +45,11 @@ public class SpigotCommandInitializer implements BeanPostProcessor {
         if (commandExecutor == null) return null;
         SpigotCommand commandAnnotation = commandExecutor.getClass().getAnnotation(SpigotCommand.class);
         PluginCommand command = plugin.getCommand(commandAnnotation.command());
-        if (command != null) command.setExecutor((CommandExecutor) bean);
-        else log.warn("You forgot add command '/" + commandAnnotation.command() + "' to plugin.yml");
+        if (command != null) {
+            log.warn("Registered " + bean.getClass().getSimpleName() + " as command executor.");
+            command.setExecutor((CommandExecutor) bean);
+        }
+        else log.warn("You forgot add command '" + commandAnnotation.command() + "' to plugin.yml");
         return bean;
     }
 }

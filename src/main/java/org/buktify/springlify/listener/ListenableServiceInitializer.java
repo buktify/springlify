@@ -11,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.DestructionAwareBeanPostProcessor;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Configuration;
 
-@Service
+@Configuration
 @Log4j2
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -30,7 +30,10 @@ public class ListenableServiceInitializer implements DestructionAwareBeanPostPro
     @Override
     public Object postProcessAfterInitialization(@NotNull Object bean, @NotNull String beanName) throws BeansException {
         Listener listener = getListener(bean);
-        if (listener != null) plugin.getServer().getPluginManager().registerEvents(listener, plugin);
+        if (listener != null) {
+            plugin.getServer().getPluginManager().registerEvents(listener, plugin);
+            log.warn("Registered " + bean.getClass().getSimpleName() + " as event listener.");
+        }
         return bean;
     }
 
