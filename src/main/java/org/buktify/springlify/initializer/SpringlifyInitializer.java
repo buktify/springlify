@@ -29,6 +29,11 @@ public class SpringlifyInitializer {
                     if (applicationContext instanceof AnnotationConfigApplicationContext annotationConfigApplicationContext) {
                         annotationConfigApplicationContext.register(ListenableServiceInitializer.class);
                         annotationConfigApplicationContext.register(SpigotCommandInitializer.class);
+                        try {
+                            Class<?> databaseConfigurationOptionalClass = Class.forName("org.buktify.springlify.configuration.bukkit.DatabaseConfiguration");
+                            annotationConfigApplicationContext.register(databaseConfigurationOptionalClass);
+                        } catch (ClassNotFoundException ignored) {
+                        }
                     }
                 })
                 .initializers()

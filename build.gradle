@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'org.buktify'
-version '1.0.5'
+version '1.0.6'
 
 dependencies {
     compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
@@ -33,7 +33,7 @@ publishing {
         mavenJava(MavenPublication) {
             artifactId = 'springlify'
             group = 'org.buktify'
-            version = '1.0.5'
+            version = '1.0.6'
             from components.java
             versionMapping {
                 usage('java-api') {
