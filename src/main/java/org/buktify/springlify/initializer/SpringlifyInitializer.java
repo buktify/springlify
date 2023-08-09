@@ -1,6 +1,7 @@
 package org.buktify.springlify.initializer;
 
 import lombok.experimental.UtilityClass;
+import lombok.extern.log4j.Log4j2;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.buktify.springlify.commands.SpigotCommandInitializer;
 import org.buktify.springlify.listener.ListenableServiceInitializer;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @UtilityClass
+@Log4j2
 public class SpringlifyInitializer {
 
     public static ConfigurableApplicationContext initialize(@NotNull JavaPlugin plugin, @NotNull Class<?> applicationClass) {
@@ -30,8 +32,9 @@ public class SpringlifyInitializer {
                         annotationConfigApplicationContext.register(ListenableServiceInitializer.class);
                         annotationConfigApplicationContext.register(SpigotCommandInitializer.class);
                         try {
-                            Class<?> databaseConfigurationOptionalClass = Class.forName("org.buktify.springlify.configuration.bukkit.DatabaseConfiguration");
+                            Class<?> databaseConfigurationOptionalClass = Class.forName("org.buktify.springlify.configuration.DatabaseConfiguration");
                             annotationConfigApplicationContext.register(databaseConfigurationOptionalClass);
+                            log.warn("Enabling JPA support...");
                         } catch (ClassNotFoundException ignored) {
                         }
                     }
